@@ -26,12 +26,6 @@ router.get('/blocks/latest', async (req, res) => {
     }
 });
 
-app.use('/', router);
-
-app.listen(5000, () => {
-    console.log('App listening on port 5000');
-});
-
 /**
  * Will get the latest blocks from the blockchain.  The amount of blocks is dependent on
  * the numberOfBlocksToFetch argument and will fetch up to that many blocks (assuming that
@@ -62,7 +56,7 @@ async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
 
             // The previous block (if it exists) now becomes the current block to continue the loop
             // backwards to find the rest of the latest blocks.
-            blockToFetch = ("previous" in blockInfo) ? blockInfo : '';
+            blockToFetch = (blockInfo.hasOwnProperty('previous')) ? blockInfo.previous : '';
 
             numberOfBlocksToFetch--;
         } catch (err) {
@@ -72,3 +66,9 @@ async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
 
     return blocksArray;
 }
+
+app.use('/', router);
+
+app.listen(5000, () => {
+    console.log('App listening on port 5000');
+});
