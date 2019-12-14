@@ -4,6 +4,7 @@ const router = express.Router();
 const cors = require('cors');
 const fetch = require('node-fetch');
 const { JsonRpc, RpcError } = require('eosjs');
+const axios = require('axios');
 
 app.use(cors());
 
@@ -39,24 +40,42 @@ router.get('/blocks/latest', async (req, res) => {
 async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
     const blocksArray = [];
     let blockToFetch = startingBlock;
+    let totalActionsPerBlock = 0;
 
     while (numberOfBlocksToFetch !== 0) {
         try {
+            // Resetting this back to zero to start the count of actions for the next block.
+            totalActionsPerBlock = 0;
+
             // In the event that numbersOfBlocksToFetch is greater than the number of the blocks in the blockchain,
             // break the loop and return the blocks that we have gathered thus far.
             if (!blockToFetch) break;
 
             const blockInfo = await rpc.get_block(blockToFetch);
+
+            // Tally all of the actions for each transaction for the entire block.
+            for (let i = 0; i < blockInfo.transactions.length; i++) {
+
+                // The 'trx' could be a string in some cases, which means that there is not going to be
+                // a transaction log with all of the actions.  We want to ignore those cases.
+                if (typeof blockInfo.transactions[i].trx !== 'string' &&
+                    blockInfo.transactions[i].trx.hasOwnProperty('transaction') &&
+                    blockInfo.transactions[i].trx.transaction.hasOwnProperty('actions')
+                ) {
+                    totalActionsPerBlock += blockInfo.transactions[i].trx.transaction.actions.length;
+                }
+            }
+
             blocksArray.push({
                 id: blockInfo.id,
                 timestamp: blockInfo.timestamp,
-                transactionsCount: blockInfo.transactions.length,
+                actionsCount: totalActionsPerBlock,
                 rawJson: JSON.stringify(blockInfo, undefined, 2),
             });
 
-            // The previous block (if it exists) now becomes the current block to continue the loop
+            // The previous block (if it exists and is not empty) now becomes the current block to continue the loop
             // backwards to find the rest of the latest blocks.
-            blockToFetch = (blockInfo.hasOwnProperty('previous')) ? blockInfo.previous : '';
+            blockToFetch = (blockInfo.hasOwnProperty('previous') && blockInfo.previous !== '') ? blockInfo.previous : '';
 
             numberOfBlocksToFetch--;
         } catch (err) {
@@ -69,6 +88,6 @@ async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
 
 app.use('/', router);
 
-app.listen(5000, () => {
-    console.log('App listening on port 5000');
+app.listen(5001, () => {
+    console.log('App listening on port 5001');
 });

@@ -20,7 +20,9 @@ const HomeContainer = () => {
             // Forces a re-render to get the Loading prompt to come back to let the user know
             // that we are waiting for the next result set.
             setLatestBlocks([]);
-            const result = await axios.get('http://localhost:5000/blocks/latest');
+            // API base URL should be moved out to a environment variable, but tried to keep things simple
+            // for getting the program to run on your end.
+            const result = await axios.get('http://localhost:5001/blocks/latest');
             setLatestBlocks(result.data.latestBlocks);
         } catch (err) {
             setTimeout(() => {

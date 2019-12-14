@@ -8,7 +8,7 @@ const LatestBlocks = ({blocks}) => (
                  aria-expanded="true" aria-controls="collapse-{{id}}">
                 <p className="mb-0"><span className="font-weight-bold">ID:</span>{block.id}</p>
                 <p className="mb-0"><span className="font-weight-bold">Timestamp:</span> {block.timestamp}</p>
-                <p className="mb-0"><span className="font-weight-bold"># of Transactions:</span> {block.transactionsCount}
+                <p className="mb-0"><span className="font-weight-bold"># of Actions:</span> {block.actionsCount}
                 </p>
             </div>
 
