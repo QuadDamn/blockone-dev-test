@@ -14,7 +14,7 @@ This project requires Node v12.13.1 or later.
 ```  
 $ git clone https://github.com/QuadDamn/blockone-dev-test.git  
 $ cd blockone-dev-test  
-$ npm install # This will handle the install for both the Node.js server packages and then the React packages in the `app` directory.
+$ npm install # This will handle the install for both the Node.js server dependencies in the root directory and then the React dependencies in the `app` directory.
 $ npm run dev # This will start both the Node.js API and the React frontend.
 ```  
 
@@ -22,14 +22,11 @@ You can view the application at http://localhost:3000 after completing the last 
   
 ### Running Test Suite  
   
-In the project directory, run the following to kick of the Jest/Supertest tests:  
+In the project directory, run the following to kick off the Jest/Supertest tests:  
   
 ```sh  
 npm test  
 ```  
-  
-  
-## Project Thoughts  
   
 ### Submission Assumptions  
 
