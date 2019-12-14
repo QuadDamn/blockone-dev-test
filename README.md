@@ -1,7 +1,7 @@
 
 # Block.one Developer Test  
   
-This repository is represents the finalized source code for the Node.js Developer Test for Block.one.  
+This repository represents the finalized source code for the Node.js Developer Test for Block.one.  
   
 ## Developer Information  
   
@@ -33,14 +33,14 @@ npm test
   
 ### Submission Assumptions  
 
-- While this was mainly a Node.js test, I made the assumption it would be alright to try to flex some basic React skills as well as the position that I am applying for is a full-stack role.  I did this in lieu of the Mustache templating.
+- Given the instructions for the exercise, I used Node.js for the backend and React for the frontend.  I noticed that the bonus task said to use Mustache, so I assumed it would be alright to just implement the same thing in React and still use the `markdown-it` package.
 - I was planning to modify the timestamp structure, but there were no requirements to clean that up, so I left it alone.  If I was planning to clean it up, I would use [Moment](https://momentjs.com) and translate it to `MM-DD-YYY HH:mm:ss` format.  I am not sure with how you do things at Block.one if those milliseconds are important, so I didn't want to hazard a guess!  
   
 ### Potential API Resource Improvements  
   
-*Please note that this is nothing more than constructive criticism and I'd love to work with someone to shore up this documentation if brought onboard.*  
+*Please note that this is nothing more than constructive criticism and I'd love to work with someone to shore up this documentation if 1) you felt it was actually needed and 2) if I was brought on.*  
   
-I found the API documentation for Nodeos to be lacking (that could be my lack of exposure to blockchain technology though, so take this with a grain of salt!).  Given that this documentation speaks to a more technical audience and might influence someone's initial impression of the product offering, I think more detailed documentation similar to the detail you would find with the [Stripe API documentation](https://stripe.com/docs/api) might bode well.  
+I found the API documentation for Nodeos to be lacking (that could be my lack of exposure to blockchain technology though).  Given that this documentation speaks to a more technical audience and might influence someone's initial impression of the product offering, I think more detailed documentation similar to the detail you would find with the [Stripe API documentation](https://stripe.com/docs/api) might bode well.  
   
 Some of my recommendations to start would be:  
   
