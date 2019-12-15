@@ -1,5 +1,5 @@
 import React from 'react';
-import Markdown from 'react-markdown-it';
+import PropTypes from 'prop-types';
 
 const LatestBlocks = ({blocks}) => (
     blocks.map((block) => (
@@ -22,5 +22,16 @@ const LatestBlocks = ({blocks}) => (
         </div>
     ))
 );
+
+LatestBlocks.propTypes = {
+  blocks: PropTypes.arrayOf(
+      PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          timestamp: PropTypes.string.isRequired,
+          actionsCount: PropTypes.number.isRequired,
+          rawJson: PropTypes.string.isRequired
+      })
+  )
+};
 
 export default LatestBlocks;
