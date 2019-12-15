@@ -7,14 +7,15 @@ const { JsonRpc, RpcError } = require('eosjs');
 
 app.use(cors());
 
-router.get('/blocks/latest', async (req, res) => {
+router.get('/block/latest/:numberOfBlocks', async (req, res) => {
     // Typically would move out the API endpoint to an .env variable,
     // but kept it here for ease of running the program on your end.
     const rpc = new JsonRpc('https://api.eosnewyork.io', { fetch });
 
     try {
+        const numberOfBlocksToFetch = req.params.numberOfBlocks;
         const blockchainInfo = await rpc.get_info();
-        const blocksArray = await getLatestBlocks(rpc, blockchainInfo.head_block_num);
+        const blocksArray = await getLatestBlocks(rpc, blockchainInfo.head_block_num, numberOfBlocksToFetch);
         return res.status(200).json({latestBlocks: blocksArray});
     } catch (err) {
         console.log('\nCaught exception: ' + err);
@@ -36,7 +37,7 @@ router.get('/blocks/latest', async (req, res) => {
  * @param numberOfBlocksToFetch
  * @returns {Promise<[]>}
  */
-async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
+async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch)  {
     const blocksArray = [];
     let blockToFetch = startingBlock;
     let totalActionsPerBlock = 0;

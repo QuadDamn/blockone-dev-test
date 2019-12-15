@@ -15,12 +15,13 @@ describe('API tests for /blocks/latest endpoint', () => {
     });
 
     it('should get 10 blocks back', async (done) => {
+        const numberOfBlocksToFetch = 10;
         const res = await request(app)
-            .get('/blocks/latest');
+            .get(`/block/latest/${numberOfBlocksToFetch}`);
 
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('latestBlocks');
-        expect(res.body.latestBlocks.length).toEqual(10);
+        expect(res.body.latestBlocks.length).toEqual(numberOfBlocksToFetch);
 
         done();
     });
@@ -53,15 +54,6 @@ describe('Functional tests for getLatestBlocks function', () => {
 
         expect(Array.isArray(latestBlocks)).toBe(true);
         expect(latestBlocks.length).toEqual(0);
-
-        done();
-    });
-
-    it('should get 10 blocks back because didn\'t pass an argument for the numberOfBlocksToFetch 3rd parameter of the getLatestBlocks function and 10 is the default value.', async (done) => {
-        const latestBlocks = await getLatestBlocks(rpc, blockchainInfo.head_block_num);
-
-        expect(Array.isArray(latestBlocks)).toBe(true);
-        expect(latestBlocks.length).toEqual(10);
 
         done();
     });

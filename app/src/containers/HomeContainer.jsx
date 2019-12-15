@@ -1,52 +1,63 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import LatestBlocks from '../components/LatestBlocks';
+import React, {useState, useCallback} from 'react';
+import Block from '../components/Block';
 
-const HomeContainer = () => {
+const DEFAULT_ERROR_MESSAGE = 'There was an issue getting the latest blocks from the blockchain.  Press the \'Load Latest Blocks\' to try again.';
+
+const HomeContainer = ({ fetchLatestBlocks }) => {
     const [latestBlocks, setLatestBlocks] = useState([]);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [errorMessage, setErrorMessage] = useState();
 
-    useEffect(async () => {
-        try {
-            await getLatestBlocks();
-        } catch (err) {
-            // Error notification was already done in `getLatestBlocks` function
-            // due to the use of the function here and the onClick event on the Load button.
+    React.useEffect(() => {
+        fetchLatestBlocks().then((response) => {
+            setErrorMessage('');
+            setLatestBlocks(response.data.latestBlocks);
+        }).catch((err) => {
             console.log(err);
-        }
-    }, []);
+            setErrorMessage(DEFAULT_ERROR_MESSAGE);
+        });
+    }, [fetchLatestBlocks]);
 
-    async function getLatestBlocks() {
+    const refreshLatestBlocks = useCallback(async () => {
+        // Don't want to send another request while we are already refreshing the data.
+        if (isRefreshing) return;
+
+        setErrorMessage('');
+        setLatestBlocks([]);
+        setIsRefreshing(true);
+
         try {
-            // Forces a re-render to get the Loading prompt to come back to let the user know
-            // that we are waiting for the next result set.
-            setLatestBlocks([]);
-            // API base URL should be moved out to a environment variable, but tried to keep things simple
-            // for getting the program to run on your end.
-            const result = await axios.get('http://localhost:5001/blocks/latest');
-            setLatestBlocks(result.data.latestBlocks);
+            const response = await fetchLatestBlocks();
+            setLatestBlocks(response.data.latestBlocks);
+            setIsRefreshing(false);
         } catch (err) {
-            setTimeout(() => {
-                alert('There was an issue loading the latest blocks from the blockchain.  Please try again.');
-            }, 3000);
+            console.log(err);
+            setErrorMessage(DEFAULT_ERROR_MESSAGE);
+            setIsRefreshing(false);
         }
-    }
+    }, [fetchLatestBlocks, isRefreshing]);
 
     return (
         <div className="container">
             <div className="latest-blocks-container">
                 <h1>
                     <span>Block.one Developer Test</span>
-                    <button className='btn btn-primary float-right' onClick={() => getLatestBlocks()}>Load Latest Blocks
+                    <button className='btn btn-primary float-right' disabled={isRefreshing} onClick={refreshLatestBlocks}>Load Latest Blocks
                     </button>
                 </h1>
+
+                {errorMessage ? <div className="alert alert-danger">{errorMessage}</div> : ''}
+
+                {!errorMessage && latestBlocks.length === 0 ? <div>Loading Latest Blocks...</div> : ''}
 
                 {latestBlocks.length > 0
                     ?
                     <div className="accordion" id="latestBlocksAccordion">
-                        <LatestBlocks blocks={latestBlocks} />
+                        {latestBlocks.map((block) => (
+                            <Block key={block.id} block={block} />
+                        ))}
                     </div>
-                    : <div>Loading Latest Blocks...</div>
-                }
+                    : ''}
             </div>
         </div>
     );
