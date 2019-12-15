@@ -1,6 +1,9 @@
 const fetch = require('node-fetch');
 const {JsonRpc} = require('eosjs');
 
+/**
+ * Class that works via the EOSJS library with the Chain API from the EOSIO blockchain (https://developers.eos.io/eosio-nodeos).
+ */
 class ChainAPI {
     constructor() {
         // Typically would move out the API endpoint to an .env variable,
@@ -8,6 +11,13 @@ class ChainAPI {
         this.rpc = new JsonRpc('https://api.eosnewyork.io', {fetch});
     }
 
+    /**
+     * Getting various details about the blockchain.
+     *
+     * API Reference: https://developers.eos.io/eosio-nodeos/reference#get_info-1
+     *
+     * @returns {Promise<GetInfoResult>}
+     */
     async getInfo() {
         try {
             return await this.rpc.get_info();
@@ -20,6 +30,8 @@ class ChainAPI {
      * Will get the latest blocks from the blockchain.  The amount of blocks is dependent on
      * the numberOfBlocksToFetch argument and will fetch up to that many blocks (assuming that
      * the chain is not brand new or something of that sort).
+     *
+     * API Reference: https://developers.eos.io/eosio-nodeos/reference#get_block-1
      *
      * @param startingBlock
      * @param numberOfBlocksToFetch

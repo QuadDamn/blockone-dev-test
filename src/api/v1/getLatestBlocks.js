@@ -1,6 +1,14 @@
 const {RpcError} = require('eosjs');
 const ChainAPI = require('../../classes/ChainAPI');
 
+/**
+ * Will get the latest blocks based on the numberOfBlocks query parameter argument
+ * (dependent on there being that many blocks in the blockchain).
+ *
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
 async function getLatestBlocks(req, res) {
     try {
         const numberOfBlocksToFetch = req.params.numberOfBlocks;
