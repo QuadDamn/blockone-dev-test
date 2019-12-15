@@ -9,6 +9,8 @@ const LatestBlocksContainer = ({fetchLatestBlocks}) => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
 
+    // Had to end up using React.useEffect instead of the destructured useEffect
+    // because the Jest spyOn would not work otherwise.
     React.useEffect(() => {
         fetchLatestBlocks().then((response) => {
             setErrorMessage('');
@@ -38,6 +40,8 @@ const LatestBlocksContainer = ({fetchLatestBlocks}) => {
         }
     }, [fetchLatestBlocks, isRefreshing]);
 
+    console.log(latestBlocks);
+
     return (
         <div className="container">
             <div className="latest-blocks-container">
@@ -56,7 +60,7 @@ const LatestBlocksContainer = ({fetchLatestBlocks}) => {
                     ?
                     <div className="accordion" id="latestBlocksAccordion">
                         {latestBlocks.map((block) => (
-                            <Block key={block.id} block={block}/>
+                            <Block key={block.id} {...block}/>
                         ))}
                     </div>
                     : ''}
