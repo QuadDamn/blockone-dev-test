@@ -53,9 +53,9 @@ describe("Latest Blocks", () => {
 
             const firstBlock = wrapper.find("Block").first();
 
-            expect(firstBlock.prop("id")).toEqual("05aa6138b8fc026619b54194e31c9b35b937968b7cb09f7e2fd17fbdcbf51b1f");
-            expect(firstBlock.prop("timestamp")).toEqual("2019-12-15T02:43:08.000");
-            expect(firstBlock.prop("actionsCount")).toEqual(98);
+            expect(firstBlock.props().block.id).toEqual("05aa6138b8fc026619b54194e31c9b35b937968b7cb09f7e2fd17fbdcbf51b1f");
+            expect(firstBlock.props().block.timestamp).toEqual("2019-12-15T02:43:08.000");
+            expect(firstBlock.props().block.actionsCount).toEqual(98);
         });
     });
 });

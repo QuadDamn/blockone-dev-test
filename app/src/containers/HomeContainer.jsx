@@ -1,5 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import Block from '../components/Block';
+import PropTypes from 'prop-types';
 
 const DEFAULT_ERROR_MESSAGE = 'There was an issue getting the latest blocks from the blockchain.  Press the \'Load Latest Blocks\' to try again.';
 
@@ -61,6 +62,10 @@ const HomeContainer = ({ fetchLatestBlocks }) => {
             </div>
         </div>
     );
+};
+
+HomeContainer.propTypes = {
+    fetchLatestBlocks: PropTypes.func.isRequired
 };
 
 export default HomeContainer;

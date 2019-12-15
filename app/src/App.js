@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import HomeContainer from './containers/HomeContainer';
 import {fetchLatestBlocks} from './api';
 
-
 function App() {
     return (
         <Router>
