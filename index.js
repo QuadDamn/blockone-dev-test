@@ -4,7 +4,6 @@ const router = express.Router();
 const cors = require('cors');
 const fetch = require('node-fetch');
 const { JsonRpc, RpcError } = require('eosjs');
-const axios = require('axios');
 
 app.use(cors());
 
@@ -42,7 +41,7 @@ async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
     let blockToFetch = startingBlock;
     let totalActionsPerBlock = 0;
 
-    while (numberOfBlocksToFetch !== 0) {
+    while (numberOfBlocksToFetch > 0) {
         try {
             // Resetting this back to zero to start the count of actions for the next block.
             totalActionsPerBlock = 0;
@@ -76,7 +75,6 @@ async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
             // The previous block (if it exists and is not empty) now becomes the current block to continue the loop
             // backwards to find the rest of the latest blocks.
             blockToFetch = (blockInfo.hasOwnProperty('previous') && blockInfo.previous !== '') ? blockInfo.previous : '';
-
             numberOfBlocksToFetch--;
         } catch (err) {
             throw err;
@@ -88,6 +86,14 @@ async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch = 10) {
 
 app.use('/', router);
 
-app.listen(5001, () => {
-    console.log('App listening on port 5001');
-});
+// The server listener gets created in the jest test suite.
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(5001, () => {
+        console.log('App listening on port 5001');
+    });
+}
+
+module.exports = {
+    app,
+    getLatestBlocks
+};
