@@ -8,6 +8,10 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
+    "testPathIgnorePatterns": [
+      "/node_modules",
+      "/app/"
+    ],
     "moduleFileExtensions": ["js", "json", "jsx"]
   },
   "scripts": {
