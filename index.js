@@ -3,14 +3,14 @@ const app = express();
 const router = express.Router();
 const cors = require('cors');
 const fetch = require('node-fetch');
-const { JsonRpc, RpcError } = require('eosjs');
+const {JsonRpc, RpcError} = require('eosjs');
 
 app.use(cors());
 
 router.get('/block/latest/:numberOfBlocks', async (req, res) => {
     // Typically would move out the API endpoint to an .env variable,
     // but kept it here for ease of running the program on your end.
-    const rpc = new JsonRpc('https://api.eosnewyork.io', { fetch });
+    const rpc = new JsonRpc('https://api.eosnewyork.io', {fetch});
 
     try {
         const numberOfBlocksToFetch = req.params.numberOfBlocks;
@@ -38,7 +38,7 @@ router.get('/block/latest/:numberOfBlocks', async (req, res) => {
  * @param numberOfBlocksToFetch
  * @returns {Promise<[]>}
  */
-async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch)  {
+async function getLatestBlocks(rpc, startingBlock, numberOfBlocksToFetch) {
     const blocksArray = [];
     let blockToFetch = startingBlock;
     let totalActionsPerBlock = 0;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const DEFAULT_ERROR_MESSAGE = 'There was an issue getting the latest blocks from the blockchain.  Press the \'Load Latest Blocks\' to try again.';
 
-const HomeContainer = ({ fetchLatestBlocks }) => {
+const LatestBlocksContainer = ({fetchLatestBlocks}) => {
     const [latestBlocks, setLatestBlocks] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
@@ -43,7 +43,8 @@ const HomeContainer = ({ fetchLatestBlocks }) => {
             <div className="latest-blocks-container">
                 <h1>
                     <span>Block.one Developer Test</span>
-                    <button className='btn btn-primary float-right' disabled={isRefreshing} onClick={refreshLatestBlocks}>Load Latest Blocks
+                    <button className='btn btn-primary float-right' disabled={isRefreshing}
+                            onClick={refreshLatestBlocks}>Load Latest Blocks
                     </button>
                 </h1>
 
@@ -55,7 +56,7 @@ const HomeContainer = ({ fetchLatestBlocks }) => {
                     ?
                     <div className="accordion" id="latestBlocksAccordion">
                         {latestBlocks.map((block) => (
-                            <Block key={block.id} block={block} />
+                            <Block key={block.id} block={block}/>
                         ))}
                     </div>
                     : ''}
@@ -64,8 +65,8 @@ const HomeContainer = ({ fetchLatestBlocks }) => {
     );
 };
 
-HomeContainer.propTypes = {
+LatestBlocksContainer.propTypes = {
     fetchLatestBlocks: PropTypes.func.isRequired
 };
 
-export default HomeContainer;
+export default LatestBlocksContainer;

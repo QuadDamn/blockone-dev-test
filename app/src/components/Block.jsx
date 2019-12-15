@@ -15,19 +15,20 @@ const Block = ({id, timestamp, actionsCount, rawJson}) => (
              data-parent="#latestBlocksAccordion">
             <div className="card-body">
                 <p><span className="font-weight-bold">Raw JSON:</span></p>
-                <pre className="pre-scrollable" style={{border: "1px lightgray solid", padding: "10px"}}><code>{rawJson}</code></pre>
+                <pre className="pre-scrollable"
+                     style={{border: "1px lightgray solid", padding: "10px"}}><code>{rawJson}</code></pre>
             </div>
         </div>
     </div>
 );
 
 Block.propTypes = {
-  block: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
-      actionsCount: PropTypes.number.isRequired,
-      rawJson: PropTypes.string.isRequired
-  })
+    block: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        timestamp: PropTypes.string.isRequired,
+        actionsCount: PropTypes.number.isRequired,
+        rawJson: PropTypes.string.isRequired
+    })
 };
 
 export default Block;

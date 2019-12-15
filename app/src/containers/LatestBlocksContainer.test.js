@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow, configure } from 'enzyme';
+import {shallow, configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import HomeContainer from './HomeContainer';
+import LatestBlocksContainer from './LatestBlocksContainer';
 
 configure({adapter: new Adapter()});
 
@@ -40,7 +40,7 @@ describe("Latest Blocks", () => {
             fetchLatestBlocks: jest.fn().mockResolvedValue(axiosMockResponseData),
         };
 
-        wrapper = shallow(<HomeContainer {...props} />);
+        wrapper = shallow(<LatestBlocksContainer {...props} />);
     });
 
     describe("on start", () => {

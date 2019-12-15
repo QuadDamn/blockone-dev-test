@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import HomeContainer from './containers/HomeContainer';
+import LatestBlocksContainer from './containers/LatestBlocksContainer';
 import {fetchLatestBlocks} from './api';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
             <div>
                 <Switch>
                     <Route path="/">
-                        <HomeContainer fetchLatestBlocks={fetchLatestBlocks}/>
+                        <LatestBlocksContainer fetchLatestBlocks={fetchLatestBlocks}/>
                     </Route>
                 </Switch>
             </div>

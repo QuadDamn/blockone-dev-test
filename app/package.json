@@ -35,9 +35,8 @@
     ]
   },
   "devDependencies": {
-    "async-wait-until": "^1.2.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
-    "nock": "^11.7.0"
+    "jest": "^24.9.0"
   }
 }

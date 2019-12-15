@@ -33,7 +33,7 @@ describe('API tests for /blocks/latest endpoint', () => {
 
 describe('Functional tests for getLatestBlocks function', () => {
     beforeAll(async (done) => {
-        rpc = new JsonRpc('https://api.eosnewyork.io', { fetch });
+        rpc = new JsonRpc('https://api.eosnewyork.io', {fetch});
         blockchainInfo = await rpc.get_info();
         done();
     });
