@@ -7,9 +7,6 @@ async function getLatestBlocks(req, res) {
 
         const chainAPIInstance = new ChainAPI();
         const blockchainInfo = await chainAPIInstance.getInfo();
-
-        console.log(blockchainInfo);
-
         const blocksArray = await chainAPIInstance.getLatestBlocks(blockchainInfo.head_block_num, numberOfBlocksToFetch);
 
         return res.status(200).json({latestBlocks: blocksArray});
