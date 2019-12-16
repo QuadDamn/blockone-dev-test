@@ -1,6 +1,7 @@
 import React from 'react';
-import {shallow, configure} from 'enzyme';
+import {shallow, configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import {act} from 'react-dom/test-utils';
 import LatestBlocksContainer from './LatestBlocksContainer';
 
 configure({adapter: new Adapter()});
@@ -31,19 +32,15 @@ const axiosMockResponseData = {
 };
 
 describe("Latest Blocks", () => {
-    let props, useEffect, wrapper;
+    describe("on start", () => {
+        const useEffect = jest.spyOn(React, "useEffect").mockImplementationOnce(f => f());
 
-    beforeEach(() => {
-        useEffect = jest.spyOn(React, "useEffect").mockImplementationOnce(f => f());
-
-        props = {
+        const props = {
             fetchLatestBlocks: jest.fn().mockResolvedValue(axiosMockResponseData),
         };
 
-        wrapper = shallow(<LatestBlocksContainer {...props} />);
-    });
+        const wrapper = shallow(<LatestBlocksContainer {...props} />);
 
-    describe("on start", () => {
         it("loads the latest blocks", () => {
             expect(props.fetchLatestBlocks).toHaveBeenCalled();
         });
@@ -56,6 +53,20 @@ describe("Latest Blocks", () => {
             expect(firstBlock.props().id).toEqual("05aa6138b8fc026619b54194e31c9b35b937968b7cb09f7e2fd17fbdcbf51b1f");
             expect(firstBlock.props().timestamp).toEqual("2019-12-15T02:43:08.000");
             expect(firstBlock.props().actionsCount).toEqual(98);
+        });
+    });
+
+    describe("test refresh latest blocks button click", () => {
+        it('should call mock function when button is clicked', () => {
+            const fetchLatestBlocks = jest.fn();
+            const component = shallow(
+                <button id="refreshLatestBlocksButton"
+                        className='btn btn-primary float-right'
+                        onClick={fetchLatestBlocks}>Load Latest Blocks
+                </button>
+            );
+            component.simulate('click');
+            expect(fetchLatestBlocks).toHaveBeenCalled();
         });
     });
 });

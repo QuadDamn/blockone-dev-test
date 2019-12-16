@@ -1,10 +1,10 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import Block from '../components/Block';
 import PropTypes from 'prop-types';
 
 const DEFAULT_ERROR_MESSAGE = 'There was an issue getting the latest blocks from the blockchain.  Press the \'Load Latest Blocks\' to try again.';
 
-const LatestBlocksContainer = ({fetchLatestBlocks}) => {
+const LatestBlocksContainer = ({ fetchLatestBlocks, refreshLatestBlocks }) => {
     const [latestBlocks, setLatestBlocks] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
@@ -21,7 +21,7 @@ const LatestBlocksContainer = ({fetchLatestBlocks}) => {
         });
     }, [fetchLatestBlocks]);
 
-    const refreshLatestBlocks = useCallback(async () => {
+    refreshLatestBlocks = async () => {
         // Don't want to send another request while we are already refreshing the data.
         if (isRefreshing) return;
 
@@ -38,14 +38,16 @@ const LatestBlocksContainer = ({fetchLatestBlocks}) => {
             setErrorMessage(DEFAULT_ERROR_MESSAGE);
             setIsRefreshing(false);
         }
-    }, [fetchLatestBlocks, isRefreshing]);
+    };
 
     return (
         <div className="container">
             <div className="latest-blocks-container">
                 <h1>
                     <span>Block.one Developer Test</span>
-                    <button className='btn btn-primary float-right' disabled={isRefreshing}
+                    <button id="refreshLatestBlocksButton"
+                            className='btn btn-primary float-right'
+                            disabled={isRefreshing}
                             onClick={refreshLatestBlocks}>Load Latest Blocks
                     </button>
                 </h1>
