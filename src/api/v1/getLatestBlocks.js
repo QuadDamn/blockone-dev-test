@@ -22,10 +22,10 @@ async function getLatestBlocks(req, res) {
         console.log('\nCaught exception: ' + err);
         if (err instanceof RpcError) {
             console.log(JSON.stringify(err.json, null, 2));
-            return res.status(err.json.code).json({});
+            return res.status(err.json.code).json();
         }
 
-        return res.status(err.code).json({});
+        return res.status(500).json();
     }
 }
 

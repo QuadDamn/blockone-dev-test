@@ -78,6 +78,7 @@ class ChainAPI {
                 blockToFetch = (blockInfo.hasOwnProperty('previous') && blockInfo.previous !== '') ? blockInfo.previous : '';
                 numberOfBlocksToFetch--;
             } catch (err) {
+                console.log(blockToFetch);
                 throw err;
             }
         }
