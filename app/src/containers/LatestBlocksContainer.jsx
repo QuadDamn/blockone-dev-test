@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const DEFAULT_ERROR_MESSAGE = 'There was an issue getting the latest blocks from the blockchain.  Press the \'Load Latest Blocks\' to try again.';
 
-const LatestBlocksContainer = ({ fetchLatestBlocks, refreshLatestBlocks }) => {
+const LatestBlocksContainer = ({ fetchLatestBlocks }) => {
     const [latestBlocks, setLatestBlocks] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
@@ -21,7 +21,7 @@ const LatestBlocksContainer = ({ fetchLatestBlocks, refreshLatestBlocks }) => {
         });
     }, [fetchLatestBlocks]);
 
-    refreshLatestBlocks = async () => {
+    const refreshLatestBlocks = async () => {
         // Don't want to send another request while we are already refreshing the data.
         if (isRefreshing) return;
 
