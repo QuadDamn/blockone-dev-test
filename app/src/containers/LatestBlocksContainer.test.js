@@ -1,7 +1,6 @@
 import React from 'react';
 import {shallow, configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {act} from 'react-dom/test-utils';
 import LatestBlocksContainer from './LatestBlocksContainer';
 
 configure({adapter: new Adapter()});
