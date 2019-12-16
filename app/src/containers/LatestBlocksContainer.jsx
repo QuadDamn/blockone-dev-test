@@ -40,8 +40,6 @@ const LatestBlocksContainer = ({fetchLatestBlocks}) => {
         }
     }, [fetchLatestBlocks, isRefreshing]);
 
-    console.log(latestBlocks);
-
     return (
         <div className="container">
             <div className="latest-blocks-container">
